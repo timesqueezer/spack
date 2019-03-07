@@ -36,16 +36,16 @@ class HpcgNec(Package):
             'SRCdir       = $(TOPdir)/src',
             'BINdir       = $(TOPdir)/bin',
             # Message Passing library (MPI)
-            'MPinc        = {0}'.format(spec['mpi'].prefix.include),
-            'MPlib        = -L{0}'.format(spec['mpi'].prefix.lib),
+            'MPinc        = /opt/nec/ve/mpi/2.0.0/include',
+            'MPlib        = /opt/nec/ve/mpi/2.0.0/lib/ve',
             # HPCG includes / libraries / specifics
             'HPCG_INCLUDES = -I$(INCdir) -I$(arch) -I$(MPinc)',
-            'HPCG_LIBS    = ',
+            'HPCG_LIBS    = -pthread -Wl,-rpath -Wl,$(MPlib) -Wl,--enable-new-dtags -L$(MPlib) -lmpi -lmpi_mem -lrt',
             'HPCG_OPTS    = -DHPCG_NO_OPENMP',
-            'HPCG_DEFS    = $(HPCG_OPTS) $(HPCG_INCLUDES)',
+            'HPCG_DEFS    = $(HPCG_OPTS) $(HPCG_INCLUDES) $(HPCG_LIBS)',
             # Compilers / linkers - Optimization flags
-            'CXX          = {0}'.format(spec['mpi'].mpicxx),
-            'CXXFLAGS      = $(HPCG_DEFS) -O3 -ffast-math -ftree-vectorize -ftree-vectorizer-verbose=0',
+            'CXX          = /opt/nec/ve/bin/nc++',
+            'CXXFLAGS     = $(HPCG_DEFS) -O3 -ffast-math',
             'LINKER       = $(CXX)',
             'LINKFLAGS    = $(CXXFLAGS)',
             'ARCHIVER     = ar',
@@ -74,5 +74,5 @@ class HpcgNec(Package):
 
     def install(self, spec, prefix):
         # manual install
-        install_tree('build/bin', prefix.bin)
-
+        mkdir(prefix.bin)
+        install('build/bin/xhpcg', join_path(prefix.bin, 'xhpcg-nec'))
