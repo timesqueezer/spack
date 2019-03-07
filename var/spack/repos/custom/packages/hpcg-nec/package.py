@@ -69,7 +69,7 @@ class HpcgNec(Package):
     def build(self, spec, prefix):
         build_path = join_path(os.getcwd(), 'build')
         with working_dir(build_path):
-            make('arch={}'.format(self.arch))
+            make('arch={0}'.format(self.arch))
 
 
     def install(self, spec, prefix):
