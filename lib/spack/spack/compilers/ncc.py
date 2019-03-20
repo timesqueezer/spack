@@ -35,11 +35,9 @@ class Ncc(Compiler):
     def cxx14_flag(self):
         return "-std=c++14"
 
-    """
     @property
     def pic_flag(self):
         return "-fpic"
-    """
 
     @classmethod
     def default_version(cls, comp):
