@@ -1,0 +1,14 @@
+modules:
+  prefix_inspections:
+    include:
+      - NCC_INCLUDE_PATH
+    lib:
+      - NCC_LIBRARY_PATH
+      - VE_LD_LIBRARY_PATH
+    lib64:
+      - NCC_LIBRARY_PATH
+      - VE_LD_LIBRARY_PATH
+  tcl:
+    naming_scheme: '${PACKAGE}/${VERSION}-${COMPILERNAME}-${COMPILERVER}'
+    all:
+      autoload: 'all'
